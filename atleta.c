@@ -4,13 +4,25 @@
 #include <string.h>
 
 
+SLList * camp = NULL;
+
 typedef struct _atleta_{
     char nome[30];
     int idade;
     float altura;
     float TempoMin;
-}Atleta;
+} Atleta;
 
+
+SLList * criarCampeonato(){
+    if(camp == NULL){
+        camp = SllCreate();
+        return camp;
+    } else {
+        printf("Campeonato já criado");
+        return NULL;
+    }
+}
 
 Atleta * criarAtleta(char nome[], int idade, float altura, float TempoMin){
     Atleta * atleta;
@@ -45,3 +57,92 @@ int cmpAtleta(void * atleta1, void * atleta2){
     return FALSE;
 }
 
+
+int inserirAtleta(){
+    if (camp == NULL){
+        printf("Crie um campeonato primeiro!\n");
+        return FALSE;
+    }
+        char nome[30];
+        int idade;
+        float altura, TempoMin;
+        Atleta * atleta;
+        
+        printf("Digite as informações do Atleta a ser inserido!\n");
+        printf("Nome Completo:\n");
+        fgets(nome, 30, stdin);
+
+        printf("Idade:\n");
+        scanf("%d", &idade);
+
+        printf("Altura:\n");
+        scanf("%f", &altura);
+        
+        printf("Menor Tempo:\n");
+        scanf("%f", &TempoMin);
+
+        atleta = criarAtleta(nome, idade, altura, TempoMin);
+
+        SLLInsert(camp, atleta);
+
+        return TRUE;
+}
+
+
+Atleta * removerAtleta(){
+    if (camp == NULL){
+        printf("Crie um campeonato e insira um atleta primeiro!\n");
+        return FALSE;
+    }
+        char nome[30];
+        int idade;
+        float altura, TempoMin;
+        Atleta * atleta;
+        
+        printf("Digite as informações do Atleta a ser removido!\n");
+        printf("Nome Completo:\n");
+        fgets(nome, 30, stdin);
+
+        printf("Idade:\n");
+        scanf("%d", &idade);
+
+        printf("Altura:\n");
+        scanf("%f", &altura);
+        
+        printf("Menor Tempo:\n");
+        scanf("%f", &TempoMin);
+
+        //atleta = SllRemoveSpec(camp, ) CHECAR A REMOÇÃO
+}
+
+
+Atleta * consultarAtleta(){
+    if (camp == NULL){
+        printf("Crie um campeonato e insira um atleta primeiro!\n");
+        return FALSE;
+    }
+        char nome[30];
+        int idade;
+        float altura, TempoMin;
+        Atleta * atleta;
+        
+        printf("Digite as informações do Atleta a ser consultado!\n");
+        printf("Nome Completo:\n");
+        fgets(nome, 30, stdin);
+
+        printf("Idade:\n");
+        scanf("%d", &idade);
+
+        printf("Altura:\n");
+        scanf("%f", &altura);
+        
+        printf("Menor Tempo:\n");
+        scanf("%f", &TempoMin);
+
+        //atleta = SllQuery(camp,) CHECAR A CONSULTA
+}
+
+
+//PARA LISTAR É NECESSÁRIO CONSTRUIR MÉTODOS GET PARA CONSEGUIR OS ATRIBUTOS DO TAD
+
+//MÉTODO DESTROY É PADRÃO

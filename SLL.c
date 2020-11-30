@@ -1,22 +1,22 @@
 #include "sll.h"
 #include <stdio.h>
 
-struct _SLNode_ {
+typedef struct _SLNode_ {
     struct _SLNode_ *next;
     void * data;
 } SLNode;
 
-typedef struct _SLList_{
+typedef struct _SLLIst_ {
     SLNode *first;
     SLNode *cur;
-}SLList;
+} SLList;
 
 //CRIA UMA LISTA
 SLList *SllCreate(){
     SLList *l;
-    //É ALOCADO UM SLLIST NA VARIÁVEL l
+    //ï¿½ ALOCADO UM SLLIST NA VARIï¿½VEL l
     l = (SLList *)malloc(sizeof(SLList));
-    //É CHECADA A ALOCAÇÃO DE l
+    //ï¿½ CHECADA A ALOCAï¿½ï¿½O DE l
     if(l != NULL){
         l->first = NULL;
         return l;
