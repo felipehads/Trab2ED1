@@ -19,4 +19,6 @@ void * SllShow(SLList *l);
 
 int SllDestroy(SLList *l);
 
+void * SllGetFirst(SLList * l);
+
 #endif

@@ -58,7 +58,8 @@ int cmpAtleta(void * atleta1, void * atleta2){
 }
 
 
-int inserirAtleta(){
+void inserirAtleta(){
+    int result = FALSE;
     if (camp == NULL){
         printf("Crie um campeonato primeiro!\n");
         return FALSE;
@@ -83,13 +84,16 @@ int inserirAtleta(){
 
         atleta = criarAtleta(nome, idade, altura, TempoMin);
 
-        SLLInsert(camp, atleta);
+        result = SLLInsert(camp, atleta);
 
-        return TRUE;
+        if (result == TRUE){
+            printf("Atleta inserido na competição!\n\n");
+        }
 }
 
 
-Atleta * removerAtleta(){
+void removerAtleta(){
+    void * result = NULL;
     if (camp == NULL){
         printf("Crie um campeonato e insira um atleta primeiro!\n");
         return FALSE;
@@ -112,11 +116,18 @@ Atleta * removerAtleta(){
         printf("Menor Tempo:\n");
         scanf("%f", &TempoMin);
 
-        //atleta = SllRemoveSpec(camp, ) CHECAR A REMOÇÃO
+        atleta = criarAtleta(nome, idade, altura, TempoMin);
+
+        result = SllRemoveSpec(camp, atleta, cmpAtleta);
+
+        if(result != NULL){
+            printf("Atleta removido da competição!\n\n");
+        }
 }
 
 
-Atleta * consultarAtleta(){
+void consultarAtleta(){
+    void * result = NULL;
     if (camp == NULL){
         printf("Crie um campeonato e insira um atleta primeiro!\n");
         return FALSE;
@@ -139,10 +150,72 @@ Atleta * consultarAtleta(){
         printf("Menor Tempo:\n");
         scanf("%f", &TempoMin);
 
-        //atleta = SllQuery(camp,) CHECAR A CONSULTA
+        atleta = criarAtleta(nome,idade,altura,TempoMin);
+        result = SllQuery(camp, atleta, cmpAtleta);
+
+        if (result != NULL){
+            pritnf("ATLETA ENCONTRADO!!\n");
+            printf("NOME:%c\n", retornaNome(atleta));
+            printf("IDADE:%d\n", retornaIdade(atleta));
+            printf("ALTURA:%f\n", retornaAltura(atleta));
+            printf("TEMPO MÍNIMO:%f\n", retornaTempoMin(atleta));
+        }
+        
+
+
 }
 
+void destruirCampeonato(){
+    if (SllGetFirst(camp) != NULL){
+        printf("Primeiro retire todos os atletas do campeonato!\n");
+    } else {
+        printf("O campeonato será destruido!!\n\n");
+        if (SllDestroy(camp) == TRUE){
+            printf("Campeonato destruído!!!\n");
+        }
+        return FALSE;
+    }
+}
 
-//PARA LISTAR É NECESSÁRIO CONSTRUIR MÉTODOS GET PARA CONSEGUIR OS ATRIBUTOS DO TAD
+void listarAtletas(SLList * camp){
+    Atleta * atleta;
+    if (camp != NULL){
+        atleta = getFirst(camp);
+        while (atleta != NULL){
+            printf("NOME: %s\n", retornaNome(atleta));
+            printf("IDADE: %s\n", retornaIdade(atleta));
+            printf("ALTURA: %s\n", retornaAltura(atleta));
+            printf("TEMPO MÍNIMO: %s\n", retornaTempoMin(atleta));
+            
+            atleta = SllGetNext(camp);     
+        }
+    }
+}
 
-//MÉTODO DESTROY É PADRÃO
+char retornaNome(Atleta * atleta){
+    if (atleta != NULL){
+        return atleta->nome;
+    }
+    return -1;
+};
+
+int retornaIdade(Atleta * atleta){
+    if(atleta != NULL){
+        return atleta->idade;
+    }
+    return -1;
+};
+
+float retornaAltura(Atleta * atleta){
+    if(atleta != NULL){
+        return atleta->altura;
+    }
+    return -1;
+};
+
+float retornaTempoMin(Atleta * atleta){
+    if(atleta != NULL){
+        return atleta->TempoMin;
+    }
+    return -1;
+};

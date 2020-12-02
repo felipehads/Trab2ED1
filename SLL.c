@@ -19,6 +19,7 @@ SLList *SllCreate(){
     //� CHECADA A ALOCA��O DE l
     if(l != NULL){
         l->first = NULL;
+        l->cur = NULL;
         return l;
     }
     return NULL;
@@ -96,4 +97,33 @@ int SllDestroy(SLList *l){
         }
     }
     return FALSE;
+}
+
+void * SllGetFirst(SLList * l){
+    SLNode * first = NULL;
+    void * data = NULL;
+    
+    if (l != NULL){
+        if(l->first != NULL){
+            first = l->first;
+            data = first->data;
+            l->cur = first;
+            return data;
+        }
+    }
+    return NULL;
+}
+
+void * SllGetNext(SLList *l){
+    SLNode *next = NULL;
+    void * data = NULL;
+    if(l != NULL){
+        if(l->first != NULL){
+            next = l->cur->next;
+            data = next->data;
+            l->cur = next;
+            return data;
+        }
+    }
+    return NULL;
 }
