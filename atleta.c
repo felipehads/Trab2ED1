@@ -1,8 +1,9 @@
 #include "atleta.h"
+#include "sll.h"
+#include "sll.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 SLList * camp = NULL;
 
@@ -14,15 +15,15 @@ typedef struct _atleta_{
 } Atleta;
 
 
-SLList * criarCampeonato(){
+void criarCampeonato(){
     if(camp == NULL){
         camp = SllCreate();
-        return camp;
+        printf("Campeonato criado!");
     } else {
         printf("Campeonato já criado");
-        return NULL;
     }
 }
+
 
 Atleta * criarAtleta(char nome[], int idade, float altura, float TempoMin){
     Atleta * atleta;
@@ -62,7 +63,6 @@ void inserirAtleta(){
     int result = FALSE;
     if (camp == NULL){
         printf("Crie um campeonato primeiro!\n");
-        return FALSE;
     }
         char nome[30];
         int idade;
@@ -84,7 +84,7 @@ void inserirAtleta(){
 
         atleta = criarAtleta(nome, idade, altura, TempoMin);
 
-        result = SLLInsert(camp, atleta);
+        result = SllInsert(camp, atleta);
 
         if (result == TRUE){
             printf("Atleta inserido na competição!\n\n");
@@ -96,7 +96,6 @@ void removerAtleta(){
     void * result = NULL;
     if (camp == NULL){
         printf("Crie um campeonato e insira um atleta primeiro!\n");
-        return FALSE;
     }
         char nome[30];
         int idade;
@@ -130,7 +129,7 @@ void consultarAtleta(){
     void * result = NULL;
     if (camp == NULL){
         printf("Crie um campeonato e insira um atleta primeiro!\n");
-        return FALSE;
+
     }
         char nome[30];
         int idade;
@@ -154,8 +153,8 @@ void consultarAtleta(){
         result = SllQuery(camp, atleta, cmpAtleta);
 
         if (result != NULL){
-            pritnf("ATLETA ENCONTRADO!!\n");
-            printf("NOME:%c\n", retornaNome(atleta));
+            printf("ATLETA ENCONTRADO!!\n");
+            printf("NOME:%s\n", retornaNome(atleta));
             printf("IDADE:%d\n", retornaIdade(atleta));
             printf("ALTURA:%f\n", retornaAltura(atleta));
             printf("TEMPO MÍNIMO:%f\n", retornaTempoMin(atleta));
@@ -173,30 +172,32 @@ void destruirCampeonato(){
         if (SllDestroy(camp) == TRUE){
             printf("Campeonato destruído!!!\n");
         }
-        return FALSE;
     }
 }
 
-void listarAtletas(SLList * camp){
+void listarAtletas(){
     Atleta * atleta;
     if (camp != NULL){
-        atleta = getFirst(camp);
+        atleta = SllGetFirst(camp);
         while (atleta != NULL){
             printf("NOME: %s\n", retornaNome(atleta));
-            printf("IDADE: %s\n", retornaIdade(atleta));
-            printf("ALTURA: %s\n", retornaAltura(atleta));
-            printf("TEMPO MÍNIMO: %s\n", retornaTempoMin(atleta));
+            printf("IDADE: %d\n", retornaIdade(atleta));
+            printf("ALTURA: %f\n", retornaAltura(atleta));
+            printf("TEMPO MÍNIMO: %f\n", retornaTempoMin(atleta));
             
             atleta = SllGetNext(camp);     
         }
     }
+    if(camp == NULL){
+        printf("Não há atletas!");
+    }
 }
 
-char retornaNome(Atleta * atleta){
+char * retornaNome(Atleta * atleta){
     if (atleta != NULL){
         return atleta->nome;
     }
-    return -1;
+    return NULL;
 };
 
 int retornaIdade(Atleta * atleta){

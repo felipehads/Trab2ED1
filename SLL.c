@@ -1,5 +1,8 @@
 #include "sll.h"
+#include "atleta.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct _SLNode_ {
     struct _SLNode_ *next;
@@ -86,8 +89,6 @@ void * SllQuery(SLList *l, void * key, int(*cmp)(void *, void *)){
     return NULL;
 }
 
-void * SllShow(SLList *l){
-}
 
 int SllDestroy(SLList *l){
     if(l != NULL){
@@ -102,7 +103,7 @@ int SllDestroy(SLList *l){
 void * SllGetFirst(SLList * l){
     SLNode * first = NULL;
     void * data = NULL;
-    
+
     if (l != NULL){
         if(l->first != NULL){
             first = l->first;

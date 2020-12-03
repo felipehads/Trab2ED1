@@ -21,4 +21,6 @@ int SllDestroy(SLList *l);
 
 void * SllGetFirst(SLList * l);
 
+void * SllGetNext(SLList *l);
+
 #endif
